@@ -40,9 +40,19 @@ public class StringBuilderTest {
     sb1.delete(0, sb1.length());
   }
 
+  @Benchmark
+  public void setLengthTest() throws Exception {
+    sb1.append(UUID.randomUUID().toString()).append(UUID.randomUUID().toString())
+        .append(UUID.randomUUID().toString()).append(UUID.randomUUID().toString())
+        .append(UUID.randomUUID().toString()).append(UUID.randomUUID().toString())
+        .append(UUID.randomUUID().toString());
+    sb1.setLength(0);
+  }
+
   public static void main(String[] args) throws RunnerException {
     Options opt = new OptionsBuilder().include(StringBuilderTest.class.getSimpleName()).forks(1)
-        .warmupIterations(1).measurementIterations(5).build();
+        .warmupIterations(2
+        ).measurementIterations(5).build();
 
     new Runner(opt).run();
   }
